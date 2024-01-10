@@ -172,7 +172,7 @@ impl Bitfield<u8> {
             Some(value) => {
                 let size = mem::size_of::<u8>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & 0xff;
+                    let resul = self.bitfield.bitfielddata;
                     Ok(resul)
                 }
                 else {
@@ -196,7 +196,12 @@ impl Bitfield<u8> {
     pub fn set_value(& mut self,key:&str , value : u8) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2u8.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<u8>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2u8.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2u8.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -307,7 +312,7 @@ impl Bitfield<i8> {
             Some(value) => {
                 let size = mem::size_of::<i8>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & -1;
+                    let resul = self.bitfield.bitfielddata ;
                     Ok(resul)
                 }
                 else {
@@ -324,7 +329,12 @@ impl Bitfield<i8> {
     pub fn set_value(& mut self,key:&str , value : i8) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2i8.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<i8>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2i8.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2i8.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -430,7 +440,7 @@ impl Bitfield<u16> {
             Some(value) => {
                 let size = mem::size_of::<u16>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & 0xffff;
+                    let resul = self.bitfield.bitfielddata;
                     Ok(resul)
                 }
                 else {
@@ -447,7 +457,12 @@ impl Bitfield<u16> {
     pub fn set_value(& mut self,key:&str , value : u16) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2u16.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<u16>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2u16.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2u16.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -553,7 +568,7 @@ impl Bitfield<i16> {
             Some(value) => {
                 let size = mem::size_of::<i16>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & -1;
+                    let resul = self.bitfield.bitfielddata;
                     Ok(resul)
                 }
                 else {
@@ -570,7 +585,12 @@ impl Bitfield<i16> {
     pub fn set_value(& mut self,key:&str , value : i16) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2i16.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<i16>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2i16.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2i16.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -676,7 +696,7 @@ impl Bitfield<u32> {
             Some(value) => {
                 let size = mem::size_of::<u32>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & 0xffff_ffff;
+                    let resul = self.bitfield.bitfielddata;
                     Ok(resul)
                 }
                 else {
@@ -693,7 +713,12 @@ impl Bitfield<u32> {
     pub fn set_value(& mut self,key:&str , value : u32) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2u32.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<u32>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2u32.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2u32.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -799,7 +824,7 @@ impl Bitfield<i32> {
             Some(value) => {
                 let size = mem::size_of::<i32>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & -1;
+                    let resul = self.bitfield.bitfielddata;
                     Ok(resul)
                 }
                 else {
@@ -816,7 +841,12 @@ impl Bitfield<i32> {
     pub fn set_value(& mut self,key:&str , value : i32) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2i32.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<i32>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2i32.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2i32.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -922,7 +952,7 @@ impl Bitfield<u64> {
             Some(value) => {
                 let size = mem::size_of::<u64>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & 0xffff_ffff_ffff_ffff;
+                    let resul = self.bitfield.bitfielddata;
                     Ok(resul)
                 }
                 else {
@@ -939,7 +969,12 @@ impl Bitfield<u64> {
     pub fn set_value(& mut self,key:&str , value : u64) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2u64.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<u64>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2u64.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2u64.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -1045,7 +1080,7 @@ impl Bitfield<i64> {
             Some(value) => {
                 let size = mem::size_of::<i64>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & -1;
+                    let resul = self.bitfield.bitfielddata ;
                     Ok(resul)
                 }
                 else {
@@ -1062,7 +1097,12 @@ impl Bitfield<i64> {
     pub fn set_value(& mut self,key:&str , value : i64) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2i64.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<i64>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2i64.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2i64.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -1168,7 +1208,7 @@ impl Bitfield<u128> {
             Some(value) => {
                 let size = mem::size_of::<u128>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & 0xffff_ffff_ffff_ffff_ffff_ffff_ffff_ffff;
+                    let resul = self.bitfield.bitfielddata ;
                     Ok(resul)
                 }
                 else {
@@ -1185,7 +1225,12 @@ impl Bitfield<u128> {
     pub fn set_value(& mut self,key:&str , value : u128) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2u128.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<u128>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2u128.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2u128.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
@@ -1291,7 +1336,7 @@ impl Bitfield<i128> {
             Some(value) => {
                 let size = mem::size_of::<i128>() as u8;
                 if value.length == size * 8 {
-                    let resul = (self.bitfield.bitfielddata >> value.start) & -1;
+                    let resul = self.bitfield.bitfielddata;
                     Ok(resul)
                 }
                 else {
@@ -1308,7 +1353,12 @@ impl Bitfield<i128> {
     pub fn set_value(& mut self,key:&str , value : i128) -> Result<(),String> {
         match self.bitmap.get(key) {
             Some(mvalue) => {
-                if value >= 2i128.pow(mvalue.length as u32)  { //防止超范围
+                let size = mem::size_of::<i128>() as u8;
+                if mvalue.start == 0 && mvalue.length == size * 8 {
+                    self.bitfield.bitfielddata = value;
+                    Ok(())
+                }
+                else if value >= 2i128.pow(mvalue.length as u32)  { //防止超范围
                     let format = format!("The value is out of range,the maximum value is:{},value:{}",(2i128.pow(mvalue.length as u32)) - 1,value);
                     Err(format)
                 }
